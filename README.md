@@ -1,5 +1,3 @@
-# Mapbox GL Performance Linter
+# Mapbox GL Recurse Style
 
-Lints styles for best practices to improve performance.
-
-For general style linting to confirm a valid stylesheet, see [`mapbox-gl-style-linter`](https://github.com/stamen/mapbox-gl-style-linter/).
+Recurses a Mapbox GL style to allow application of transformation and lint functions to property values.
