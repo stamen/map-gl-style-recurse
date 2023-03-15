@@ -70,6 +70,7 @@ function $c9961d77776f80d4$var$_defineProperty(obj, key, value) {
     return obj;
 }
 function $c9961d77776f80d4$var$_typeof(obj1) {
+    "@babel/helpers - typeof";
     return $c9961d77776f80d4$var$_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
         return typeof obj;
     } : function(obj) {
@@ -105,10 +106,10 @@ function $c9961d77776f80d4$var$_typeof(obj1) {
  * @param {transformFn} transformFn - transforms the value
  * @param {transformCondition} transformCondition - returns true if value meets condition
  * @returns {Array} - modified expression
- */ var $c9961d77776f80d4$var$recurseExpression = function recurseExpression(layerId, propertyKey, exp, transformFn, transformCondition) {
+ */ var $c9961d77776f80d4$var$recurseExpression = function recurseExpression1(layerId, propertyKey, exp, transformFn, transformCondition) {
     if (transformCondition(exp, propertyKey)) return transformFn(layerId, exp, propertyKey);
     if (Array.isArray(exp)) return exp.map(function(item) {
-        return recurseExpression(layerId, propertyKey, item, transformFn, transformCondition);
+        return recurseExpression1(layerId, propertyKey, item, transformFn, transformCondition);
     });
     return exp;
 };
@@ -124,16 +125,16 @@ function $c9961d77776f80d4$var$_typeof(obj1) {
     var transformFn = options.transformFn, transformCondition = options.transformCondition;
     var propertyFormat = $c9961d77776f80d4$var$_typeof(propertyValue);
     if (!transformCondition) return transformFn(propertyValue, propertyKey);
-    if (propertyFormat === 'object' && Array.isArray(propertyValue)) propertyFormat = 'expression';
-    else if (propertyFormat === 'object' && propertyValue.hasOwnProperty('stops')) propertyFormat = 'legacyStops';
-    else propertyFormat = 'literal';
+    if (propertyFormat === "object" && Array.isArray(propertyValue)) propertyFormat = "expression";
+    else if (propertyFormat === "object" && propertyValue.hasOwnProperty("stops")) propertyFormat = "legacyStops";
+    else propertyFormat = "literal";
     switch(propertyFormat){
-        case 'literal':
+        case "literal":
             return transformCondition(propertyValue, propertyKey) ? transformFn(layerId, propertyValue, propertyKey) : propertyValue;
-        case 'expression':
+        case "expression":
             // Since expressions can be nested, recurse through the expression to find any instance that meets the condition
             return $c9961d77776f80d4$var$recurseExpression(layerId, propertyKey, propertyValue, transformFn, transformCondition);
-        case 'legacyStops':
+        case "legacyStops":
             return $c9961d77776f80d4$var$_objectSpread($c9961d77776f80d4$var$_objectSpread({}, propertyValue), {}, {
                 stops: $c9961d77776f80d4$var$recurseExpression(layerId, propertyKey, propertyValue.stops, transformFn, transformCondition)
             });
@@ -146,15 +147,15 @@ function $c9961d77776f80d4$var$_typeof(obj1) {
  * @param {Object} propertyObj - property object, can be layer or paint/layout object
  * @param {Object} options - options object with transform fn, optional propertyIds, and optional recurse condition
  * @returns {Object} - modified property object
- */ var $c9961d77776f80d4$var$updateLayerPropertyValues = function updateLayerPropertyValues(layerId, propertyObj, options) {
+ */ var $c9961d77776f80d4$var$updateLayerPropertyValues = function updateLayerPropertyValues1(layerId, propertyObj, options) {
     var propertyIds = options.propertyIds;
     var nextObj = JSON.parse(JSON.stringify(propertyObj));
     for(var k in propertyObj)switch(k){
-        case 'metadata':
+        case "metadata":
             break;
-        case 'paint':
-        case 'layout':
-            nextObj[k] = updateLayerPropertyValues(layerId, propertyObj[k], options);
+        case "paint":
+        case "layout":
+            nextObj[k] = updateLayerPropertyValues1(layerId, propertyObj[k], options);
             break;
         default:
             // If specific properties are specified, only transform them
